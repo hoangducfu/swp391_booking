@@ -119,5 +119,4 @@ public static String getToken(String code) throws ClientProtocolException, IOExc
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-  
 }
