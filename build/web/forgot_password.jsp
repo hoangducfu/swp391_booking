@@ -44,7 +44,6 @@
                 <div>
                     <img style="height: 95%; width:  80vh;" src="${pageContext.request.contextPath}/image/icon/ve.jpg" alt="">
                 </div>
-
                 <div class="app-form-content">
                     <div class="container">
                         <div class="row justify-content-center">

@@ -93,10 +93,10 @@ public class LoginGoogleHandler extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
         // lấy refresh- token
         String code = request.getParameter("code");
         if (code == null) {
-            HttpSession session = request.getSession();
             session.invalidate();
             request.getRequestDispatcher("sign_in.jsp").forward(request, response);
         } else {
@@ -106,39 +106,41 @@ public class LoginGoogleHandler extends HttpServlet {
             UserGoogleDto user = getUserInfo(accessToken);
 
             String mailUser = user.getEmail();
-            String nameUser = null;
-            if (user.getName() != null) {
-                nameUser = user.getName();
-            }
+
             String err = "";
             // kiểm tra xem mail này đã tồn tại hay chưa
             if (acd.checkAccountExist(mailUser)) {
                 // nếu tài khoản này đã tồn tại với google status = true thì đăng nhập
                 if (acd.checkAccountExistWithGoogle(mailUser)) {
+                    Account account = new Account(mailUser);
+                    session.setAttribute("account", account);
                     request.getRequestDispatcher("Home.jsp").forward(request, response);
                     return;
-                }else {
+                } else {
+                    //nếu chưa liên kết với google thì sẽ update lại status và không cho login bằng mật khẩu
                     if (acd.setAccountStatusWithGoogle(mailUser)) {
-                    request.getRequestDispatcher("Home.jsp").forward(request, response);
+                        Account account = new Account(mailUser);
+                        session.setAttribute("account", account);
+                        request.getRequestDispatcher("Home.jsp").forward(request, response);
                     } else {
                         err = "không đăng nhập thành công 1";
                     }
                 }
-            }
-                else {
-                    // nếu tài khoản này chưa tồn tại thì set nó đăng nhập với google 
-                    boolean check = acd.addAccountGoogle(mailUser, nameUser);
-                    if (check) {
-                        request.getRequestDispatcher("Home.jsp").forward(request, response);
-                    } else {
-                        err = "không đăng nhập thành công";
-                        request.setAttribute("err", err);
-                        request.getRequestDispatcher("sign_in.jsp").forward(request, response);
-                    }
+            } else {
+                // nếu tài khoản này chưa tồn tại thì set nó đăng nhập với google 
+                boolean check = acd.addAccountGoogle(mailUser);
+                if (check) {
+                    Account account = new Account(mailUser);
+                    session.setAttribute("account", account);
+                    request.getRequestDispatcher("Home.jsp").forward(request, response);
+                } else {
+                    err = "không đăng nhập thành công";
+                    request.setAttribute("err", err);
+                    request.getRequestDispatcher("sign_in.jsp").forward(request, response);
                 }
             }
         }
-    
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.

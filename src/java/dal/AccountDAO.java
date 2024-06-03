@@ -14,7 +14,7 @@ import model.Account;
 public class AccountDAO extends DBContext {
 
     public boolean checkAccountExistWithGoogle(String mailUser) {
-        String sql = "SELECT * FROM [dbo].[tbl_account] where email =? and statusGoogle = ?";
+        String sql = "SELECT *  FROM [dbo].[Account] where username =? and GoogleStatus =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, mailUser);
@@ -30,18 +30,19 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
-    public boolean addAccountGoogle(String mailUser, String nameUser) {
-        String sql = "INSERT INTO [dbo].[tbl_account]\n"
-                + "           ([email]\n"
+    public boolean addAccountGoogle(String email) {
+        String sql = "INSERT INTO [dbo].[Account]\n"
+                + "           ([username]\n"
                 + "           ,[password]\n"
-                + "           ,[statusGoogle]\n"
-                + "           ,[roleId]\n"
-                + "           ,[name])\n"
-                + "     VALUES (?,null,1,2,?)";
+                + "           ,[phoneNumber]\n"
+                + "           ,[birthdate]\n"
+                + "           ,[GoogleStatus]\n"
+                + "           ,[roleId])\n"
+                + "     VALUES\n"
+                + "           (?,null,null,null,1,3)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, mailUser);
-            st.setString(2, nameUser);
+            st.setString(1, email);
             st.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -61,14 +62,21 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public boolean checkAccountExist(String email, String password) {
-        String sql = "SELECT * FROM [dbo].[tbl_account] where email =? and password = ?";
+    // username là email
+    public boolean checkAccountExist(String username, String password) {
+        String sql = "SELECT [accountID]\n"
+                + "      ,[username]\n"
+                + "      ,[password]\n"
+                + "      ,[phoneNumber]\n"
+                + "      ,[birthdate]\n"
+                + "      ,[GoogleStatus]\n"
+                + "      ,[roleId]\n"
+                + "  FROM [dbo].[Account]\n"
+                + "	where username =? and password =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, email);
+            st.setString(1, username);
             st.setString(2, password);
-            // kiem tra tai khoan nay co phai dang nhap bang gg hay k
-//            st.setInt(3, 0);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return true;
@@ -81,7 +89,15 @@ public class AccountDAO extends DBContext {
     }
 
     public boolean checkAccountExist(String username) {
-        String sql = "SELECT * FROM [dbo].[tbl_account] where email =? ";
+        String sql = "SELECT [accountID]\n"
+                + "      ,[username]\n"
+                + "      ,[password]\n"
+                + "      ,[phoneNumber]\n"
+                + "      ,[birthdate]\n"
+                + "      ,[GoogleStatus]\n"
+                + "      ,[roleId]\n"
+                + "  FROM [dbo].[Account]\n"
+                + "	where username =?  ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
@@ -98,13 +114,15 @@ public class AccountDAO extends DBContext {
 
     public boolean addAccount(String username, String password) {
         // 0 là k liên kết với gg, 2 là customer
-        String sql = "INSERT INTO [dbo].[tbl_account]\n"
-                + "           ([email]\n"
+        String sql = "INSERT INTO [dbo].[Account]\n"
+                + "           ([username]\n"
                 + "           ,[password]\n"
-                + "           ,[statusGoogle]\n"
-                + "           ,[roleId]\n"
-                + "           ,[name])\n"
-                + "     VALUES (?,?,0,2,null)";
+                + "           ,[phoneNumber]\n"
+                + "           ,[birthdate]\n"
+                + "           ,[GoogleStatus]\n"
+                + "           ,[roleId])\n"
+                + "     VALUES\n"
+                + "           (?,?,null,null,0,3)   ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
@@ -119,9 +137,9 @@ public class AccountDAO extends DBContext {
     }
 
     public boolean setAccountStatusWithGoogle(String mailUser) {
-        String sql = "UPDATE [dbo].[tbl_account]\n"
-                + "   SET statusGoogle =1\n"
-                + " WHERE email =?";
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [GoogleStatus] = 1\n"
+                + " WHERE username =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, mailUser);
@@ -135,9 +153,9 @@ public class AccountDAO extends DBContext {
     }
 
     public boolean setPassWordAccount(String username, String password) {
-        String sql = "UPDATE [dbo].[tbl_account]\n"
-                + "   SET password =?\n"
-                + " WHERE email = ?";
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [password] = ?\n"
+                + " WHERE username =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, password);

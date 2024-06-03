@@ -19,7 +19,9 @@ import model.Account;
  * @author hoangduc
  */
 public class OtpServlet extends HttpServlet {
+
     AccountDAO acd = new AccountDAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,10 +67,10 @@ public class OtpServlet extends HttpServlet {
         //gửi mã otp
         SendEmail sm = new SendEmail();
         String code = sm.getRandom();
-        if(sm.sendEmail(acc.getUsername(), code)){
+        if (sm.sendEmail(acc.getUsername(), code)) {
             session.setAttribute("code", code);
-        }else{
-            String err="k gui duoc code";
+        } else {
+            String err = "k gui duoc code";
             request.setAttribute("err", err);
         }
         request.getRequestDispatcher("otp.jsp").forward(request, response);
@@ -89,20 +91,32 @@ public class OtpServlet extends HttpServlet {
         // lấy account đã được đẩy lên session khi sign up
         Account acc = (Account) session.getAttribute("account");
         String code = (String) session.getAttribute("code");
-        String err="";
+        String err = "";
         // lấy otp mà khách hàng đăng nhập
         try {
             String otp = request.getParameter("otp");
-            if(otp.equals(code)){
-                if (acd.setPassWordAccount(acc.getUsername(), acc.getPassword())) {
-                    session.removeAttribute("code");
-                    request.getRequestDispatcher("Home.jsp").forward(request, response);
-                    return;
+            if (otp.equals(code)) {
+                //hẩu
+                if (session.getAttribute("setpass")!=null) {
+                    if (acd.setPassWordAccount(acc.getUsername(), acc.getPassword())) {
+                        session.removeAttribute("code");
+                        session.removeAttribute("setpass");
+                        request.getRequestDispatcher("Home.jsp").forward(request, response);
+                        return;
+                    } else {
+                        err = "lỗi cài mật khẩu " + acc.getUsername();
+                    }
                 } else {
-                    err = acc.getUsername()+"   "+acc.getPassword();
+                    if (acd.addAccount(acc.getUsername(), acc.getPassword())) {
+                        session.removeAttribute("code");
+                        request.getRequestDispatcher("Home.jsp").forward(request, response);
+                        return;
+                    } else {
+                        err = "lỗi " + acc.getUsername();
+                    }
                 }
-            }else{
-                err="OTP không đúng, hãy kiểm tra lại !!!";
+            } else {
+                err = "OTP không đúng, hãy kiểm tra lại !!!";
             }
             request.setAttribute("err", err);
             request.getRequestDispatcher("otp.jsp").forward(request, response);
