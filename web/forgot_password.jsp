@@ -41,14 +41,10 @@
     <body>				
         <div class="form-wrapper">
             <div class="app-form">
-                <div class="app-form-sidebar">
-                    <div class="sidebar-sign-logo">
-                        <img src="${pageContext.request.contextPath}/image/icon/logo.jpg" alt="">
-                    </div>
-                    <div class="sign_sidebar_text">
-                        <h1>The Easiest Way to Create Events and Sell More Tickets Online</h1>
-                    </div>
+                <div>
+                    <img style="height: 95%; width:  80vh;" src="${pageContext.request.contextPath}/image/icon/ve.jpg" alt="">
                 </div>
+
                 <div class="app-form-content">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -76,7 +72,7 @@
                                         <div class="col-lg-12 col-md-12">	
                                             <div class="form-group mt-4">
                                                 <div class="field-password">
-                                                    <label class="form-label">Mật khẩu*</label>
+                                                    <label class="form-label">Mật khẩu mới*</label>
                                                 </div>
                                                 <div class="loc-group position-relative">
                                                     <input class="form-control h_50" type="password" name="password" placeholder="" required>

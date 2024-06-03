@@ -41,14 +41,10 @@
     <body>				
         <div class="form-wrapper">
             <div class="app-form">
-                <div class="app-form-sidebar">
-                    <div class="sidebar-sign-logo">
-                        <img src="${pageContext.request.contextPath}/image/icon/logo.jpg" alt="">
-                    </div>
-                    <div class="sign_sidebar_text">
-                        <h1 style="margin-bottom: 300px">The Easiest Way to Create Events and Sell More Tickets Online</h1>
-                    </div>
+                <div>
+                    <img style="height: 95%; width:  80vh;" src="${pageContext.request.contextPath}/image/icon/ve.jpg" alt="">
                 </div>
+
                 <div class="app-form-content">
                     <div class="container">
                         <div class="row justify-content-center">
