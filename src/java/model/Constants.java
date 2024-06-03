@@ -9,11 +9,11 @@ package model;
  * @author mactu
  */
 public class Constants {
-    public static String GOOGLE_CLIENT_ID = "332983765714-q34k91ri5rg8boflvgfl5obstgqsh1sc.apps.googleusercontent.com";
+    public static String GOOGLE_CLIENT_ID = "317266700784-kg2ivgn1cgkturjutcqgmkitdo1o5nl3.apps.googleusercontent.com";
 
-	public static String GOOGLE_CLIENT_SECRET = "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";
+	public static String GOOGLE_CLIENT_SECRET = "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";
 
-	public static String GOOGLE_REDIRECT_URI = "http://localhost:8080/Project_SWP391/loginGoogleHandler";
+	public static String GOOGLE_REDIRECT_URI = "http://localhost:9999/Project_SWP391/loginGoogleHandler";
 
 	public static String GOOGLE_LINK_GET_TOKEN = "https://accounts.google.com/o/oauth2/token";
 

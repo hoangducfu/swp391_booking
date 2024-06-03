@@ -9,33 +9,30 @@ package model;
  * @author mactu
  */
 public class Account {
-    private String user_name,email,password;
+    private String username,password, name;
     private int role;
 
     public Account() {
     }
 
-    public Account(String user_name, String email, String password, int role) {
-        this.user_name = user_name;
-        this.email = email;
+    public Account(String username, String password, String name, int role) {
+        this.username = username;
         this.password = password;
+        this.name = name;
         this.role = role;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public String getUsername() {
+        return username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -46,6 +43,14 @@ public class Account {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getRole() {
         return role;
     }
@@ -53,5 +58,11 @@ public class Account {
     public void setRole(int role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" + "username=" + username + ", password=" + password + ", name=" + name + ", role=" + role + '}';
+    }
+    
     
 }
