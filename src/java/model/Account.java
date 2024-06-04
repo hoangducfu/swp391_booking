@@ -9,10 +9,7 @@ package model;
  * @author mactu
  */
 public class Account {
-    private int id;
-    private String username, password, phone,dob;
-    private boolean statusGoogle;
-    private int role;
+    private String id, username, password, phone,dob,statusGoogle,roleid;
 
     public Account() {
     }
@@ -27,29 +24,27 @@ public class Account {
         this.password = password;
     }
 
-    public Account(String username, String password, int role) {
+    public Account(String username, String password, String roleid) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.roleid = roleid;
     }
-    
-    
-    
-    public Account(int id, String username, String password, String phone, String dob, boolean statusGoogle, int role) {
+
+    public Account(String id, String username, String password, String phone, String dob, String statusGoogle, String roleid) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.phone = phone;
         this.dob = dob;
         this.statusGoogle = statusGoogle;
-        this.role = role;
+        this.roleid = roleid;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -85,27 +80,26 @@ public class Account {
         this.dob = dob;
     }
 
-    public boolean isStatusGoogle() {
+    public String getStatusGoogle() {
         return statusGoogle;
     }
 
-    public void setStatusGoogle(boolean statusGoogle) {
+    public void setStatusGoogle(String statusGoogle) {
         this.statusGoogle = statusGoogle;
     }
 
-    public int getRole() {
-        return role;
+    public String getRoleid() {
+        return roleid;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setRoleid(String roleid) {
+        this.roleid = roleid;
     }
-
+    
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", username=" + username + ", password=" + password + ", phone=" + phone + ", dob=" + dob + ", statusGoogle=" + statusGoogle + ", role=" + role + '}';
+        return "Account{" + "id=" + id + ", username=" + username + ", password=" + password + ", phone=" + phone + ", dob=" + dob + ", statusGoogle=" + statusGoogle + ", roleid=" + roleid + '}';
     }
 
-        
     
 }

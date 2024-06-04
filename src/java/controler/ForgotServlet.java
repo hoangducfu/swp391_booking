@@ -97,9 +97,11 @@ public class ForgotServlet extends HttpServlet {
                         err="???";
                         //mã hóa mật khẩu
                         String passwordMd5 = md5Hash(password);
-                        Account ac = new Account(username, passwordMd5);
+                        // đổi mk cho người dùng
+                        Account ac = new Account(username, passwordMd5,"3");
                         HttpSession session = request.getSession();
-                        session.setAttribute("account", ac);
+                        //
+                        session.setAttribute("accountAction", ac);
                         session.setAttribute("setpass", "setpass");
                         response.sendRedirect("otp");
                         return;

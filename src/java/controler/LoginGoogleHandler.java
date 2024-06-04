@@ -117,14 +117,23 @@ public class LoginGoogleHandler extends HttpServlet {
                     request.getRequestDispatcher("Home.jsp").forward(request, response);
                     return;
                 } else {
-                    //nếu chưa liên kết với google thì sẽ update lại status và không cho login bằng mật khẩu
-                    if (acd.setAccountStatusWithGoogle(mailUser)) {
-                        Account account = new Account(mailUser);
-                        session.setAttribute("account", account);
-                        request.getRequestDispatcher("Home.jsp").forward(request, response);
+                    //nếu là tài khoản là nhân viên hay admin thì không được đăng nhập với google
+                    String roleId = acd.getRoleId(mailUser);
+                    if (roleId.equals("3")) {
+                        //nếu chưa liên kết với google thì sẽ update lại status và không cho login bằng mật khẩu
+                        if (acd.setAccountStatusWithGoogle(mailUser)) {
+                            Account account = new Account(mailUser);
+                            session.setAttribute("account", account);
+                            request.getRequestDispatcher("Home.jsp").forward(request, response);
+                            return;
+                        } else {
+                            err = "không đăng nhập thành công 1";
+                        }
                     } else {
-                        err = "không đăng nhập thành công 1";
+                        err = "Bạn chỉ được đăng nhập bằng google với tư cách là khách hàng";
                     }
+                    request.setAttribute("err", err);
+                    request.getRequestDispatcher("sign_in.jsp").forward(request, response);
                 }
             } else {
                 // nếu tài khoản này chưa tồn tại thì set nó đăng nhập với google 
@@ -153,6 +162,7 @@ public class LoginGoogleHandler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String passwordMd5 = md5Hash(password);
@@ -162,7 +172,16 @@ public class LoginGoogleHandler extends HttpServlet {
                 err = "Tài khoản này đã đăng nhập với googole, bạn hãy đăng nhập với google";
             } else {
                 // nhay ve home
-                request.getRequestDispatcher("Home.jsp").forward(request, response);
+                String roleId = acd.getRoleId(email);
+                Account account = new Account(err, passwordMd5, roleId);
+                session.setAttribute("account",account );
+
+                if (roleId.equals("1")) {
+                    response.sendRedirect("managerlist");
+                    return;
+                } else {
+                    request.getRequestDispatcher("Home.jsp").forward(request, response);
+                }
                 return;
             }
         } else {

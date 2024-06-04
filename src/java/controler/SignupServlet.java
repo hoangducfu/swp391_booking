@@ -78,6 +78,7 @@ public class SignupServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String repassword = request.getParameter("repassword");
@@ -93,10 +94,8 @@ public class SignupServlet extends HttpServlet {
                 } else {
                     //mã hóa mật khẩu
                     String passwordMd5 = md5Hash(password);
-
-                    Account ac = new Account(username, passwordMd5);
-                    HttpSession session = request.getSession();
-                    session.setAttribute("account", ac);
+                    Account ac = new Account(username, passwordMd5, "3");
+                    session.setAttribute("action", ac);
                     response.sendRedirect("otp");
                     return;
                 }

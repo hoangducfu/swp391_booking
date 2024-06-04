@@ -63,7 +63,7 @@ public class OtpServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         // lấy account đã được đẩy lên session khi sign up
-        Account acc = (Account) session.getAttribute("account");
+        Account acc = (Account) session.getAttribute("accountAction");
         //gửi mã otp
         SendEmail sm = new SendEmail();
         String code = sm.getRandom();
@@ -89,28 +89,28 @@ public class OtpServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         // lấy account đã được đẩy lên session khi sign up
-        Account acc = (Account) session.getAttribute("account");
+        Account acc = (Account) session.getAttribute("accountAction");
         String code = (String) session.getAttribute("code");
         String err = "";
         // lấy otp mà khách hàng đăng nhập
         try {
             String otp = request.getParameter("otp");
             if (otp.equals(code)) {
-                //hẩu
-                if (session.getAttribute("setpass")!=null) {
+                //nếu session này tồn tại thì sẽ đổi mật khẩu
+                if (session.getAttribute("setpass") != null) {
                     if (acd.setPassWordAccount(acc.getUsername(), acc.getPassword())) {
-                        session.removeAttribute("code");
-                        session.removeAttribute("setpass");
-                        request.getRequestDispatcher("Home.jsp").forward(request, response);
+                        response.sendRedirect("Home.jsp");
                         return;
                     } else {
                         err = "lỗi cài mật khẩu " + acc.getUsername();
                     }
-                } else {
-                    if (acd.addAccount(acc.getUsername(), acc.getPassword())) {
-                        session.removeAttribute("code");
-                        request.getRequestDispatcher("Home.jsp").forward(request, response);
+                } else {// thêm tài khoản đăng kí  
+                    if (acd.addAccount(acc.getUsername(), acc.getPassword(), acc.getRoleid())) {
+                        // neu
+                        session.setAttribute("account", acc);
+                        response.sendRedirect("Home.jsp");
                         return;
+
                     } else {
                         err = "lỗi " + acc.getUsername();
                     }

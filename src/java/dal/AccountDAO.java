@@ -52,16 +52,6 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
-    public static void main(String[] args) {
-        AccountDAO d = new AccountDAO();
-//        d.addAccountGoogle("duc19602@gmail.com", "duc");
-        if (d.addAccount("hoangvietduc19602@gmail.com", "96db4c126abc7bc183e2f338bb86a337")) {
-            System.out.println("aaaa");
-        } else {
-            System.out.println("nnnn");
-        }
-    }
-
     // username là email
     public boolean checkAccountExist(String username, String password) {
         String sql = "SELECT [accountID]\n"
@@ -112,7 +102,7 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
-    public boolean addAccount(String username, String password) {
+    public boolean addAccount(String username, String password, String roleid) {
         // 0 là k liên kết với gg, 2 là customer
         String sql = "INSERT INTO [dbo].[Account]\n"
                 + "           ([username]\n"
@@ -122,11 +112,12 @@ public class AccountDAO extends DBContext {
                 + "           ,[GoogleStatus]\n"
                 + "           ,[roleId])\n"
                 + "     VALUES\n"
-                + "           (?,?,null,null,0,3)   ";
+                + "           (?,?,null,null,0,?)   ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, password);
+            st.setString(3, roleid);
             st.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -169,4 +160,200 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
+    public List<Account> getAllListAccountStaff() {
+        List<Account> data = new ArrayList<>();
+        String sql = "SELECT [accountID]\n"
+                + "      ,[username]\n"
+                + "      ,[password]\n"
+                + "      ,[phoneNumber]\n"
+                + "      ,[birthdate]\n"
+                + "      ,[GoogleStatus]\n"
+                + "      ,[roleId]\n"
+                + "  FROM [dbo].[Account]\n"
+                + "	where roleId = 2  ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account acc;
+                String id, username, password, phone, dob, statusGoogle, roleid;
+                id = String.valueOf(rs.getInt("accountID"));
+                username = rs.getString("username");
+                password = rs.getString("password");
+                phone = rs.getString("phoneNumber");
+                dob = String.valueOf(rs.getDate("birthdate"));
+                statusGoogle = String.valueOf(rs.getBoolean("GoogleStatus"));
+                roleid = String.valueOf(rs.getInt("roleId"));
+                acc = new Account(id, username, password, phone, dob, statusGoogle, roleid);
+                data.add(acc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public List<Account> getAllListAccountCustomer() {
+        List<Account> data = new ArrayList<>();
+        String sql = "SELECT [accountID]\n"
+                + "      ,[username]\n"
+                + "      ,[password]\n"
+                + "      ,[phoneNumber]\n"
+                + "      ,[birthdate]\n"
+                + "      ,[GoogleStatus]\n"
+                + "      ,[roleId]\n"
+                + "  FROM [dbo].[Account]\n"
+                + "	where roleId = 3  ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account acc;
+                String id, username, password, phone, dob, statusGoogle, roleid;
+                id = String.valueOf(rs.getInt("accountID"));
+                username = rs.getString("username");
+                password = rs.getString("password");
+                phone = rs.getString("phoneNumber");
+                dob = String.valueOf(rs.getDate("birthdate"));
+                statusGoogle = String.valueOf(rs.getBoolean("GoogleStatus"));
+                roleid = String.valueOf(rs.getInt("roleId"));
+                acc = new Account(id, username, password, phone, dob, statusGoogle, roleid);
+                data.add(acc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public List<Account> getAllListAccountCustomerByName(String name) {
+        List<Account> data = new ArrayList<>();
+        String sql = "SELECT [accountID]\n"
+                + "      ,[username]\n"
+                + "      ,[password]\n"
+                + "      ,[phoneNumber]\n"
+                + "      ,[birthdate]\n"
+                + "      ,[GoogleStatus]\n"
+                + "      ,[roleId]\n"
+                + "  FROM [dbo].[Account]\n"
+                + "	where roleId = 3  ";
+        if (name != null && name != "") {
+            sql += " and username like '%" + name + "%'";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account acc;
+                String id, username, password, phone, dob, statusGoogle, roleid;
+                id = String.valueOf(rs.getInt("accountID"));
+                username = rs.getString("username");
+                password = rs.getString("password");
+                phone = rs.getString("phoneNumber");
+                dob = String.valueOf(rs.getDate("birthdate"));
+                statusGoogle = String.valueOf(rs.getBoolean("GoogleStatus"));
+                roleid = String.valueOf(rs.getInt("roleId"));
+                acc = new Account(id, username, password, phone, dob, statusGoogle, roleid);
+                data.add(acc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public List<Account> getAllListAccountStaffByName(String name) {
+        List<Account> data = new ArrayList<>();
+        String sql = "SELECT [accountID]\n"
+                + "      ,[username]\n"
+                + "      ,[password]\n"
+                + "      ,[phoneNumber]\n"
+                + "      ,[birthdate]\n"
+                + "      ,[GoogleStatus]\n"
+                + "      ,[roleId]\n"
+                + "  FROM [dbo].[Account]\n"
+                + "	where roleId = 2  ";
+        if (name != null && name != "") {
+            sql += " and username like '%" + name + "%'";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account acc;
+                String id, username, password, phone, dob, statusGoogle, roleid;
+                id = String.valueOf(rs.getInt("accountID"));
+                username = rs.getString("username");
+                password = rs.getString("password");
+                phone = rs.getString("phoneNumber");
+                dob = String.valueOf(rs.getDate("birthdate"));
+                statusGoogle = String.valueOf(rs.getBoolean("GoogleStatus"));
+                roleid = String.valueOf(rs.getInt("roleId"));
+                acc = new Account(id, username, password, phone, dob, statusGoogle, roleid);
+                data.add(acc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public String getRoleId(String mailUser) {
+        String sql = "SELECT [accountID]\n"
+                + "      ,[username]\n"
+                + "      ,[password]\n"
+                + "      ,[phoneNumber]\n"
+                + "      ,[birthdate]\n"
+                + "      ,[GoogleStatus]\n"
+                + "      ,[roleId]\n"
+                + "  FROM [dbo].[Account]\n"
+                + "	where username = ?  ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, mailUser);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return String.valueOf(rs.getInt("roleId"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public boolean addAccount(String email, String password, String phone, String dob, String position) {
+        String sql = "INSERT INTO [dbo].[Account]\n"
+                + "           ([username]\n"
+                + "           ,[password]\n"
+                + "           ,[phoneNumber]\n"
+                + "           ,[birthdate]\n"
+                + "           ,[GoogleStatus]\n"
+                + "           ,[roleId])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,0,?)   ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            st.setString(2, password);
+            st.setString(3, phone);
+            st.setString(4, dob);
+            st.setString(5, position);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace(); // In ra toàn bộ dấu vết ngăn xếp
+            System.out.println("err: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        AccountDAO d = new AccountDAO();
+
+        if (d.addAccount("duc9@gmail.com", "12345", "1234567890", null, "3")) {
+            System.out.println("33333");
+        } else {
+            System.out.println("4444");
+        }
+    }
 }

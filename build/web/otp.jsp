@@ -69,7 +69,7 @@
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="form-group mt-4">
                                                     <label class="form-label">User Name*</label>
-                                                    <input class="form-control h_50" type="email" readonly name="username" required placeholder="" value="${account.getUsername()}">																								
+                                                    <input class="form-control h_50" type="email" readonly name="username" required placeholder="" value="${accountAction.getUsername()}">																								
                                                 </div>
                                             </div>
 
@@ -87,7 +87,7 @@
                                             </div>
 
                                             <div class="col-lg-12 col-md-12">		
-                                                <button class="main-btn btn-hover w-100 mt-4" type="submit">Đăng Ký</button>
+                                                <button class="main-btn btn-hover w-100 mt-4" type="submit">Xác nhận</button>
                                             </div>
                                         </div>
                                     </form>
