@@ -99,8 +99,16 @@ public class OtpServlet extends HttpServlet {
                 //nếu session này tồn tại thì sẽ đổi mật khẩu
                 if (session.getAttribute("setpass") != null) {
                     if (acd.setPassWordAccount(acc.getUsername(), acc.getPassword())) {
-                        response.sendRedirect("Home.jsp");
-                        return;
+                        String role = acd.getRoleId(acc.getUsername());
+                        //kiểm tra vai trò để đăng nhập
+                        if (role.equals("2")) {
+                            response.sendRedirect("staff");
+                            return;
+                        } else {
+                            response.sendRedirect("Home.jsp");
+                            return;
+                        }
+
                     } else {
                         err = "lỗi cài mật khẩu " + acc.getUsername();
                     }

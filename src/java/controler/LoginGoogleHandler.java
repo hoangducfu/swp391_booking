@@ -179,7 +179,13 @@ public class LoginGoogleHandler extends HttpServlet {
                 if (roleId.equals("1")) {
                     response.sendRedirect("managerlist");
                     return;
-                } else {
+                }else if(roleId.equals("2")){
+                    // link này đăng nhập của staff
+                    response.sendRedirect("staff");
+                    return;
+                }
+                else {
+                    //link này đăng nhập của customer
                     request.getRequestDispatcher("Home.jsp").forward(request, response);
                 }
                 return;
