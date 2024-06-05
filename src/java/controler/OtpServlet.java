@@ -112,7 +112,6 @@ public class OtpServlet extends HttpServlet {
                     } else {
                         err = "lỗi " + acc.getUsername();
                     }
-                return;
                 }
             } else {
                 err = "OTP không đúng, hãy kiểm tra lại !!!";

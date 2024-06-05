@@ -148,6 +148,18 @@ public class ManagerList extends HttpServlet {
             request.setAttribute("dataCustomer", dataCustomer);
             request.getRequestDispatcher("list_dashboard.jsp").forward(request, response);
         }
+        if (action.equals("delete")) {
+            String id = request.getParameter("id");
+            //xóa
+            acd.deleteAccountById(id);
+            
+            dataCustomer = acd.getAllListAccountCustomer();
+            dataStaff = acd.getAllListAccountStaff();
+            request.setAttribute("dataStaff", dataStaff);
+            request.setAttribute("dataCustomer", dataCustomer);
+            request.getRequestDispatcher("list_dashboard.jsp").forward(request, response);
+        }
+
     }
 
     /**

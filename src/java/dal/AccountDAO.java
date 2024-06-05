@@ -350,10 +350,21 @@ public class AccountDAO extends DBContext {
     public static void main(String[] args) {
         AccountDAO d = new AccountDAO();
 
-        if (d.addAccount("duc9@gmail.com", "12345", "1234567890", null, "3")) {
-            System.out.println("33333");
-        } else {
-            System.out.println("4444");
+        d.deleteAccountById("2");
+    }
+
+    public void deleteAccountById(String id) {
+        String sql = "DELETE FROM [dbo].[Account]\n"
+                + "      WHERE accountID = ?   ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            st.executeUpdate();
+            return;
+        } catch (SQLException e) {
+            e.printStackTrace(); // In ra toàn bộ dấu vết ngăn xếp
+            System.out.println("err: " + e.getMessage());
         }
+        return;
     }
 }
