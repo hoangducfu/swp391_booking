@@ -69,7 +69,7 @@
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="form-group mt-4">
                                                     <label class="form-label">User Name*</label>
-                                                    <input class="form-control h_50" type="email" readonly name="username" required placeholder="" value="${accountAction.getUsername()}">																								
+                                                    <input class="form-control h_50" type="email" readonly name="username" required placeholder="" value="${account.getUsername()}">																								
                                                 </div>
                                             </div>
 

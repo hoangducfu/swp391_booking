@@ -101,7 +101,7 @@ public class ForgotServlet extends HttpServlet {
                         Account ac = new Account(username, passwordMd5,"3");
                         HttpSession session = request.getSession();
                         //
-                        session.setAttribute("accountAction", ac);
+                        session.setAttribute("account", ac);
                         session.setAttribute("setpass", "setpass");
                         response.sendRedirect("otp");
                         return;

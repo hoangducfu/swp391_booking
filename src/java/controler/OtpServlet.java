@@ -63,7 +63,7 @@ public class OtpServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         // lấy account đã được đẩy lên session khi sign up
-        Account acc = (Account) session.getAttribute("accountAction");
+        Account acc = (Account) session.getAttribute("account");
         //gửi mã otp
         SendEmail sm = new SendEmail();
         String code = sm.getRandom();
@@ -89,7 +89,7 @@ public class OtpServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         // lấy account đã được đẩy lên session khi sign up
-        Account acc = (Account) session.getAttribute("accountAction");
+        Account acc = (Account) session.getAttribute("account");
         String code = (String) session.getAttribute("code");
         String err = "";
         // lấy otp mà khách hàng đăng nhập
@@ -106,14 +106,13 @@ public class OtpServlet extends HttpServlet {
                     }
                 } else {// thêm tài khoản đăng kí  
                     if (acd.addAccount(acc.getUsername(), acc.getPassword(), acc.getRoleid())) {
-                        // neu
-                        session.setAttribute("account", acc);
                         response.sendRedirect("Home.jsp");
                         return;
 
                     } else {
                         err = "lỗi " + acc.getUsername();
                     }
+                return;
                 }
             } else {
                 err = "OTP không đúng, hãy kiểm tra lại !!!";

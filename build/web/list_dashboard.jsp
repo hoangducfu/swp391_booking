@@ -279,6 +279,8 @@
                                                                 <th scope="col">PassWord</th>
                                                                 <th scope="col">Phone</th>
                                                                 <th scope="col">Date Of Birth</th>
+                                                                <th scope="col">Action</th>
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -289,6 +291,13 @@
                                                                     <td>******</td>	
                                                                     <td>${c.phone}</td>	
                                                                     <td>${c.dob}</td>
+                                                                    <td>
+<!--                                                                        <div class="card-actions">-->
+                                                                            <a href="#" class="action-link"><i class="fa-solid fa-pen"></i></a>
+                                                                            <a href="#" class="action-link"><i class="fa-solid fa-trash-can"></i></a>
+<!--                                                                        </div>-->
+
+                                                                    </td>
                                                                 </tr>
                                                             </c:forEach>`
                                                         </tbody>									

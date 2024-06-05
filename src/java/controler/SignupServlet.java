@@ -95,7 +95,7 @@ public class SignupServlet extends HttpServlet {
                     //mã hóa mật khẩu
                     String passwordMd5 = md5Hash(password);
                     Account ac = new Account(username, passwordMd5, "3");
-                    session.setAttribute("action", ac);
+                    session.setAttribute("account", ac);
                     response.sendRedirect("otp");
                     return;
                 }
