@@ -235,29 +235,29 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="d-main-title">
-                                <h3><i class="fa-regular fa-address-card me-3"></i>Quản lý người dùng</h3>
+                                <h3><i class="fa-regular fa-address-card me-3"></i>Manager Account</h3>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="main-card mt-5">
                                 <div class="dashboard-wrap-content p-4">
                                     <div class="nav custom2-tabs btn-group" role="tablist">
-                                        <button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#staffs-tab" type="button" role="tab" aria-controls="orders-tab" aria-selected="true">Nhân viên (<span class="total_event_counter">${dataStaff.size()}</span>)</button>
-                                        <button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab" aria-controls="customers-tab" aria-selected="false">Khách hàng (<span class="total_event_counter">${dataCustomer.size()}</span>)</button>
+                                        <button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#staffs-tab" type="button" role="tab" aria-controls="orders-tab" aria-selected="true">Host (<span class="total_event_counter">${dataStaff.size()}</span>)</button>
+                                        <button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab" aria-controls="customers-tab" aria-selected="false">User (<span class="total_event_counter">${dataCustomer.size()}</span>)</button>
                                     </div>
                                     <div class="d-md-flex flex-wrap align-items-center">
                                         <div class="dashboard-date-wrap mt-4">
                                             <div class="form-group">
                                                 <div class="relative-input position-relative">
                                                     <form action="managerlist?action=search" method="post">
-                                                        <input class="form-control h_40" type="text" placeholder="Tìm kiếm bằng tên" name="name" value="${name}">
+                                                        <input class="form-control h_40" type="text" placeholder="Search by name" name="name" value="${name}">
                                                         <button type="submit"><i class="uil uil-search"></i></button>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="rs ms-auto mt-4 mt_r4">
-                                            <a href="#addEmployeeModal" class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block" data-bs-toggle="modal"><i class="fa-solid fa-plus me-3" ></i>Thêm tài khoản</a>
+                                            <a href="#addEmployeeModal" class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block" data-bs-toggle="modal"><i class="fa-solid fa-plus me-3" ></i>Add Account</a>
                                         </div>
 
                                     </div>
@@ -290,7 +290,7 @@
                                                                     <td>${c.username}</td>	
                                                                     <td>******</td>	
                                                                     <td>${c.phone}</td>	
-                                                                    <td>${c.dob}</td>
+                                                                    <td>${(c.dob eq 'null') ? '':c.dob}</td>
                                                                     <td>
                                                                         <div class="card-actions">
                                                                             <form action="managerlist?action=delete&id=${c.id}" method="post">
@@ -331,7 +331,7 @@
                                                                     <td>${c.username}</td>	
                                                                     <td>********</td>	
                                                                     <td>${c.phone}</td>	
-                                                                    <td>${c.dob}</td>
+                                                                    <td>${(c.dob eq 'null') ? '':c.dob}</td>
                                                                     <td>
                                                                         <div class="card-actions">
                                                                             <form action="managerlist?action=delete&id=${c.id}" method="post">
